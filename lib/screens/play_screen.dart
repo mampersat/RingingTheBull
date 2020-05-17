@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'constants.dart';
+import 'package:ringingthebull/score_keeper.dart';
 
 class PlayScreen extends StatefulWidget {
   @override
@@ -7,8 +8,7 @@ class PlayScreen extends StatefulWidget {
 }
 
 class _PlayScreenState extends State<PlayScreen> {
-  int remaining = 21;
-  int score = 0;
+  ScoreKeeper score = ScoreKeeper();
 
   @override
   Widget build(BuildContext context) {
@@ -23,14 +23,13 @@ class _PlayScreenState extends State<PlayScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
               Text(
-                'Points: $score , Remaining $remaining',
+                score.currentState(),
                 style: TextStyle(fontSize: 20.0),
               ),
               FlatButton(
                 onPressed: () {
                   setState(() {
-                    remaining = 21;
-                    score = 0;
+                    score.reset();
                   });
                 },
                 child: Text('Reset'),
@@ -42,8 +41,7 @@ class _PlayScreenState extends State<PlayScreen> {
               color: Colors.green,
               onPressed: () {
                 setState(() {
-                  remaining--;
-                  score++;
+                  score.hook();
                 });
               },
               child: Text(
@@ -57,7 +55,7 @@ class _PlayScreenState extends State<PlayScreen> {
             color: Colors.red,
             onPressed: () {
               setState(() {
-                remaining--;
+                score.miss();
               });
             },
             child: Text(
