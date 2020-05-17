@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:ringingthebull/screens/scores_screen.dart';
 import 'constants.dart';
 import 'package:ringingthebull/score_keeper.dart';
 
@@ -10,29 +11,6 @@ class PlayScreen extends StatefulWidget {
 
 class _PlayScreenState extends State<PlayScreen> {
   ScoreKeeper score = ScoreKeeper();
-
-  void turnOver() {
-    Alert(
-      context: context,
-      title: 'Turn Over',
-      desc: 'Score: ${score.score}',
-      style: AlertStyle(
-        backgroundColor: Colors.yellow,
-      ),
-      buttons: [
-        DialogButton(
-          child: Text(
-            "OK",
-            style: TextStyle(color: Colors.white, fontSize: 20),
-          ),
-          onPressed: () => Navigator.pop(context),
-          color: Colors.red,
-          width: 120,
-        )
-      ],
-    ).show();
-    score.reset();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,13 +29,25 @@ class _PlayScreenState extends State<PlayScreen> {
                 style: TextStyle(fontSize: 20.0),
               ),
               FlatButton(
+                child: Text('Reset'),
                 onPressed: () {
                   setState(() {
-                    //turnOver();
                     turnOver();
                   });
                 },
-                child: Text('Reset'),
+              ),
+              FlatButton(
+                child: Text('Scores'),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return ScoresScreen(score: score);
+                      },
+                    ),
+                  );
+                },
               )
             ],
           ),
@@ -93,5 +83,28 @@ class _PlayScreenState extends State<PlayScreen> {
         ],
       ),
     );
+  }
+
+  void turnOver() {
+    Alert(
+      context: context,
+      title: 'Turn Over',
+      desc: 'Score: ${score.score}',
+      style: AlertStyle(
+        backgroundColor: Colors.yellow,
+      ),
+      buttons: [
+        DialogButton(
+          child: Text(
+            "OK",
+            style: TextStyle(color: Colors.white, fontSize: 20),
+          ),
+          onPressed: () => Navigator.pop(context),
+          color: Colors.red,
+          width: 120,
+        )
+      ],
+    ).show();
+    score.reset();
   }
 }
