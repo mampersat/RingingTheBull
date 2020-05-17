@@ -6,8 +6,60 @@ class PlayScreen extends StatefulWidget {
 }
 
 class _PlayScreenState extends State<PlayScreen> {
+  int remaining = 21;
+  int score = 0;
+
   @override
   Widget build(BuildContext context) {
-    return Text('Play page');
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Ringing the Bull'),
+      ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              Text(
+                'Points: $score , Remaining $remaining',
+                style: TextStyle(fontSize: 20.0),
+              ),
+              FlatButton(
+                onPressed: () {
+                  setState(() {
+                    remaining = 21;
+                    score = 0;
+                  });
+                },
+                child: Text('Reset'),
+              )
+            ],
+          ),
+          Expanded(
+            child: FlatButton(
+              color: Colors.green,
+              onPressed: () {
+                setState(() {
+                  remaining--;
+                  score++;
+                });
+              },
+              child: Text('Hook'),
+            ),
+          ),
+          Expanded(
+              child: FlatButton(
+            color: Colors.red,
+            onPressed: () {
+              setState(() {
+                remaining--;
+              });
+            },
+            child: Text('Miss'),
+          ))
+        ],
+      ),
+    );
   }
 }
