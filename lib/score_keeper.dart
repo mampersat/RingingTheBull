@@ -20,6 +20,8 @@ class ScoreKeeper {
     remaining--;
   }
 
+  bool turnOver() => remaining == 0;
+
   String currentState() {
     return 'Score: ${score.toString()} , Remaining: ${remaining.toString()}';
   }

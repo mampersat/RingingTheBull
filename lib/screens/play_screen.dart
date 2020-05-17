@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'constants.dart';
 import 'package:ringingthebull/score_keeper.dart';
 
@@ -9,6 +10,29 @@ class PlayScreen extends StatefulWidget {
 
 class _PlayScreenState extends State<PlayScreen> {
   ScoreKeeper score = ScoreKeeper();
+
+  void turnOver() {
+    Alert(
+      context: context,
+      title: 'Turn Over',
+      desc: 'Score: ${score.score}',
+      style: AlertStyle(
+        backgroundColor: Colors.yellow,
+      ),
+      buttons: [
+        DialogButton(
+          child: Text(
+            "OK",
+            style: TextStyle(color: Colors.white, fontSize: 20),
+          ),
+          onPressed: () => Navigator.pop(context),
+          color: Colors.red,
+          width: 120,
+        )
+      ],
+    ).show();
+    score.reset();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +53,8 @@ class _PlayScreenState extends State<PlayScreen> {
               FlatButton(
                 onPressed: () {
                   setState(() {
-                    score.reset();
+                    //turnOver();
+                    turnOver();
                   });
                 },
                 child: Text('Reset'),
@@ -42,6 +67,7 @@ class _PlayScreenState extends State<PlayScreen> {
               onPressed: () {
                 setState(() {
                   score.hook();
+                  if (score.turnOver()) turnOver();
                 });
               },
               child: Text(
@@ -56,6 +82,7 @@ class _PlayScreenState extends State<PlayScreen> {
             onPressed: () {
               setState(() {
                 score.miss();
+                if (score.turnOver()) turnOver();
               });
             },
             child: Text(
