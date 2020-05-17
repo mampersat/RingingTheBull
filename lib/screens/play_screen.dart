@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'constants.dart';
 
 class PlayScreen extends StatefulWidget {
   @override
@@ -45,7 +46,10 @@ class _PlayScreenState extends State<PlayScreen> {
                   score++;
                 });
               },
-              child: Text('Hook'),
+              child: Text(
+                'Hook',
+                style: kBigButtonTextStyle,
+              ),
             ),
           ),
           Expanded(
@@ -56,7 +60,10 @@ class _PlayScreenState extends State<PlayScreen> {
                 remaining--;
               });
             },
-            child: Text('Miss'),
+            child: Text(
+              'Miss',
+              style: kBigButtonTextStyle,
+            ),
           ))
         ],
       ),
