@@ -16,27 +16,54 @@ class _ScoresScreenState extends State<ScoresScreen> {
   // TODO: Pass in the main scorekeeper object
   final ScoreKeeper score;
 
+  List<Widget> roundWidgets() {
+    List<Widget> ret = [];
+
+    for (var round in score.history.reversed) {
+      Widget card = Card(
+        //color: Colors.lightBlueAccent,
+        elevation: 5.0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 28.0),
+          child: Text(
+            '${round.score} points -  ${round.timeAgoString()}',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 20.0,
+            ),
+          ),
+        ),
+      );
+      ret.add(card);
+    }
+    return ret;
+  }
+
   @override
   Widget build(BuildContext context) {
-    print(score.history);
     return Scaffold(
       appBar: AppBar(
         title: Text('Score History'),
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          for (var round in score.history.reversed)
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                Text('${round.score}'),
-                SizedBox(width: 10.0),
-                Text('${round.timeAgoString()}'),
-              ],
-            )
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: roundWidgets(),
+        ),
       ),
     );
   }
 }
+
+//<Widget>[
+//for (var round in score.history.reversed)
+//Row(
+//mainAxisAlignment: MainAxisAlignment.start,
+//children: <Widget>[
+//Text('${round.score}'),
+//SizedBox(width: 10.0),
+//Text('${round.timeAgoString()}'),
+//],
