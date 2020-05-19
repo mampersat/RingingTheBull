@@ -53,6 +53,9 @@ class _PlayScreenState extends State<PlayScreen> {
           ),
           Expanded(
             child: FlatButton(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(50.0),
+              ),
               color: Colors.green,
               onPressed: () {
                 setState(() {
@@ -66,8 +69,12 @@ class _PlayScreenState extends State<PlayScreen> {
               ),
             ),
           ),
+          SizedBox(height: 20.0),
           Expanded(
               child: FlatButton(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(50.0),
+            ),
             color: Colors.red,
             onPressed: () {
               setState(() {
