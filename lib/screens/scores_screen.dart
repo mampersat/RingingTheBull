@@ -13,7 +13,6 @@ class ScoresScreen extends StatefulWidget {
 class _ScoresScreenState extends State<ScoresScreen> {
   _ScoresScreenState(this.score);
 
-  // TODO: Pass in the main scorekeeper object
   final ScoreKeeper score;
 
   List<Widget> roundWidgets() {
