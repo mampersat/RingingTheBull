@@ -13,6 +13,12 @@ class _PlayScreenState extends State<PlayScreen> {
   ScoreKeeper score = ScoreKeeper();
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
