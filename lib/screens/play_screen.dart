@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:ringingthebull/components/big_button.dart';
 import 'package:ringingthebull/screens/scores_screen.dart';
 import 'constants.dart';
 import 'package:ringingthebull/score_keeper.dart';
@@ -9,13 +10,39 @@ class PlayScreen extends StatefulWidget {
   _PlayScreenState createState() => _PlayScreenState();
 }
 
-class _PlayScreenState extends State<PlayScreen> {
+class _PlayScreenState extends State<PlayScreen> with TickerProviderStateMixin {
   ScoreKeeper score = ScoreKeeper();
 
+  AnimationController controllerHook;
+  AnimationController controllerMiss;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
+
+    controllerHook =
+        AnimationController(duration: Duration(milliseconds: 200), vsync: this);
+    controllerMiss =
+        AnimationController(duration: Duration(milliseconds: 200), vsync: this);
+
+    controllerHook.addListener(() {
+      setState(() {
+        print(controllerHook.value);
+      });
+    });
+
+    controllerHook.addStatusListener((status) {
+      if (status == AnimationStatus.completed) controllerHook.reverse();
+    });
+
+    controllerMiss.addListener(() {
+      setState(() {
+        print(controllerMiss.value);
+      });
+    });
+
+    controllerMiss.addStatusListener((status) {
+      if (status == AnimationStatus.completed) controllerMiss.reverse();
+    });
   }
 
   @override
@@ -57,42 +84,30 @@ class _PlayScreenState extends State<PlayScreen> {
               )
             ],
           ),
-          Expanded(
-            child: FlatButton(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(50.0),
-              ),
-              color: Colors.green,
-              onPressed: () {
-                setState(() {
-                  score.hook();
-                  if (score.turnOver()) turnOver();
-                });
-              },
-              child: Text(
-                'Hook',
-                style: kBigButtonTextStyle,
-              ),
-            ),
-          ),
-          SizedBox(height: 20.0),
-          Expanded(
-              child: FlatButton(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(50.0),
-            ),
-            color: Colors.red,
+          BigButton(
+            text: 'Hook',
+            color: Colors.green,
+            animationValue: controllerHook.value,
             onPressed: () {
               setState(() {
-                score.miss();
+                controllerHook.forward();
+                score.hook();
                 if (score.turnOver()) turnOver();
               });
             },
-            child: Text(
-              'Miss',
-              style: kBigButtonTextStyle,
-            ),
-          ))
+          ),
+          SizedBox(height: 20.0),
+          BigButton(
+              text: 'Miss',
+              color: Colors.red,
+              animationValue: controllerMiss.value,
+              onPressed: () {
+                setState(() {
+                  controllerMiss.forward();
+                  score.miss();
+                  if (score.turnOver()) turnOver();
+                });
+              }),
         ],
       ),
     );
