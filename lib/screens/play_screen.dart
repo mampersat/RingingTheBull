@@ -25,9 +25,7 @@ class _PlayScreenState extends State<PlayScreen> with TickerProviderStateMixin {
         AnimationController(duration: Duration(milliseconds: 200), vsync: this);
 
     controllerHook.addListener(() {
-      setState(() {
-        print(controllerHook.value);
-      });
+      setState(() {});
     });
 
     controllerHook.addStatusListener((status) {
@@ -35,9 +33,7 @@ class _PlayScreenState extends State<PlayScreen> with TickerProviderStateMixin {
     });
 
     controllerMiss.addListener(() {
-      setState(() {
-        print(controllerMiss.value);
-      });
+      setState(() {});
     });
 
     controllerMiss.addStatusListener((status) {
